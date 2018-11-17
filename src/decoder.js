@@ -143,6 +143,7 @@ if (typeof module === 'object' && typeof module.exports !== 'undefined') {
     uint16: uint16,
     temperature: temperature,
     humidity: humidity,
+    float_t: float_t,
     latLng: latLng,
     latLngAltHdop: latLngAltHdop,
     bitmap: bitmap,
