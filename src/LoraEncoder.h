@@ -49,6 +49,7 @@ class LoraEncoder {
         void reset(void);
     private:
         byte* _buffer;
+        uint8_t _cursor;
         void _intToBytes(byte *buf, int32_t i, uint8_t byteSize);
 };
 

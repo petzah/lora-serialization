@@ -31,17 +31,19 @@
 
 LoraEncoder::LoraEncoder(byte *buffer) {
   _buffer = buffer;
+  _cursor = 0;
 }
 
 void LoraEncoder::_intToBytes(byte *buf, int32_t i, uint8_t byteSize) {
     for(uint8_t x = byteSize; x > 0; x--) {
-        buf[x] = (byte) (i >> ((x-1)*8));
+        uint8_t pos = _cursor + (x-1);
+        buf[pos] = (byte) (i >> ((x-1)*8));
     }
+    _cursor += byteSize;
 }
 
 void LoraEncoder::writeUnixtime(uint32_t unixtime) {
     _intToBytes(_buffer, unixtime, 4);
-    _buffer += 4;
 }
 
 void LoraEncoder::writeLatLng(double latitude, double longitude) {
@@ -49,24 +51,20 @@ void LoraEncoder::writeLatLng(double latitude, double longitude) {
     int32_t lng = longitude * 1e6;
 
     _intToBytes(_buffer, lat, 4);
-    _intToBytes(_buffer + 4, lng, 4);
-    _buffer += 8;
+    _intToBytes(_buffer, lng, 4);
 }
 
 void LoraEncoder::writeUint16(uint16_t i) {
     _intToBytes(_buffer, i, 2);
-    _buffer += 2;
 }
 
 void LoraEncoder::writeUint8(uint8_t i) {
     _intToBytes(_buffer, i, 1);
-    _buffer += 1;
 }
 
 void LoraEncoder::writeFloat(float f) {
     int16_t t = (int16_t) (f * 100);
     _intToBytes(_buffer, t, 2);
-    _buffer += 2;
 }
 
 void LoraEncoder::writeHumidity(float humidity) {
@@ -96,5 +94,5 @@ void LoraEncoder::writeBitmap(bool a, bool b, bool c, bool d, bool e, bool f, bo
 }
 
 void LoraEncoder::reset(void) {
-    _buffer = 0;
+    _cursor = 0;
 }
