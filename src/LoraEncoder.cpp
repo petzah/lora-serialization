@@ -94,3 +94,7 @@ void LoraEncoder::writeBitmap(bool a, bool b, bool c, bool d, bool e, bool f, bo
     bitmap |= (h & 1) << 0;
     writeUint8(bitmap);
 }
+
+void LoraEncoder::reset(void) {
+    _buffer = 0;
+}
