@@ -77,6 +77,16 @@ var humidity = function(bytes) {
 };
 humidity.BYTES = 2;
 
+var float_t = function(bytes) {
+  if (bytes.length !== float_t.BYTES) {
+    throw new Error('Float must have exactly 2 bytes');
+  }
+
+  var f = bytesToInt(bytes);
+  return f / 1e2;
+};
+float_t.BYTES = 2;
+
 var bitmap = function(byte) {
   if (byte.length !== bitmap.BYTES) {
     throw new Error('Bitmap must have exactly 1 byte');
