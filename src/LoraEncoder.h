@@ -42,6 +42,8 @@ class LoraEncoder {
         void writeUint16(uint16_t i);
         void writeTemperature(float temperature);
         void writeUint8(uint8_t i);
+        void writeFloat(float f);
+        void writeVcc(float vcc);
         void writeHumidity(float humidity);
         void writeBitmap(bool a, bool b, bool c, bool d, bool e, bool f, bool g, bool h);
     private:

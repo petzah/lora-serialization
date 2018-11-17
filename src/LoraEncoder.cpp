@@ -34,8 +34,8 @@ LoraEncoder::LoraEncoder(byte *buffer) {
 }
 
 void LoraEncoder::_intToBytes(byte *buf, int32_t i, uint8_t byteSize) {
-    for(uint8_t x = 0; x < byteSize; x++) {
-        buf[x] = (byte) (i >> (x*8));
+    for(uint8_t x = byteSize; x > 0; x--) {
+        buf[x] = (byte) (i >> ((x-1)*8));
     }
 }
 
@@ -63,25 +63,22 @@ void LoraEncoder::writeUint8(uint8_t i) {
     _buffer += 1;
 }
 
-void LoraEncoder::writeHumidity(float humidity) {
-    int16_t h = (int16_t) (humidity * 100);
-    _intToBytes(_buffer, h, 2);
+void LoraEncoder::writeFloat(float f) {
+    int16_t t = (int16_t) (f * 100);
+    _intToBytes(_buffer, t, 2);
     _buffer += 2;
 }
 
-/**
-* Uses a 16bit two's complement with two decimals, so the range is
-* -327.68 to +327.67 degrees
-*/
+void LoraEncoder::writeHumidity(float humidity) {
+    writeFloat(humidity);
+}
+
+void LoraEncoder::writeVcc(float vcc) {
+    writeFloat(vcc);
+}
+
 void LoraEncoder::writeTemperature(float temperature) {
-    int16_t t = (int16_t) (temperature * 100);
-    if (temperature < 0) {
-        t = ~-t;
-        t = t + 1;
-    }
-    _buffer[0] = (byte) ((t >> 8) & 0xFF);
-    _buffer[1] = (byte) t & 0xFF;
-    _buffer += 2;
+    writeFloat(temperature);
 }
 
 void LoraEncoder::writeBitmap(bool a, bool b, bool c, bool d, bool e, bool f, bool g, bool h) {
