@@ -51,7 +51,7 @@ var latLngAltHdop = function(bytes) {
   var lng = bytesToInt(bytes.slice(4, 8));
   var alt = bytesToInt(bytes.slice(8, 10));
   var hdop = bytesToInt(bytes.slice(10, 12));
-  return [lat / 1e6, lng / 1e6, alt, hdop];
+  return { 'latitude':lat / 1e6, 'longitude':lng / 1e6, 'altitude':alt, 'hdop':hdop };
 };
 latLngAltHdop.BYTES = 12;
 
