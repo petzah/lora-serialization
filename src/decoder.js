@@ -42,6 +42,19 @@ var latLng = function(bytes) {
 };
 latLng.BYTES = 8;
 
+var latLngAltHdop = function(bytes) {
+  if (bytes.length !== latLngAltHdop.BYTES) {
+    throw new Error('Lat/Long/Alt/Hdop must have exactly 12 bytes');
+  }
+
+  var lat = bytesToInt(bytes.slice(0, 4));
+  var lng = bytesToInt(bytes.slice(4, 8));
+  var alt = bytesToInt(bytes.slice(8, 10));
+  var hdop = bytesToInt(bytes.slice(10, 12));
+  return [lat / 1e6, lng / 1e6, alt, hdop];
+};
+latLngAltHdop.BYTES = 12;
+
 var temperature = function(bytes) {
   if (bytes.length !== temperature.BYTES) {
     throw new Error('Temperature must have exactly 2 bytes');
@@ -131,6 +144,7 @@ if (typeof module === 'object' && typeof module.exports !== 'undefined') {
     temperature: temperature,
     humidity: humidity,
     latLng: latLng,
+    latLngAltHdop: latLngAltHdop,
     bitmap: bitmap,
     decode: decode
   };
