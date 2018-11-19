@@ -54,12 +54,8 @@ void LoraEncoder::writeLatLng(double latitude, double longitude) {
     _intToBytes(_buffer, lng, 4);
 }
 
-void LoraEncoder::writeLatLngAltHdop(double latitude, double longitude, uint16_t altitude, int16_t hdop) {
-    int32_t lat = latitude * 1e6;
-    int32_t lng = longitude * 1e6;
-
-    _intToBytes(_buffer, lat, 4);
-    _intToBytes(_buffer, lng, 4);
+void LoraEncoder::writeLatLngAltHdop(double latitude, double longitude, int16_t altitude, int16_t hdop) {
+    writeLatLng(latitude, longitude);
     _intToBytes(_buffer, altitude, 2);
     _intToBytes(_buffer, hdop, 2);
 }

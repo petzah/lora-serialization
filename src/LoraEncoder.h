@@ -40,7 +40,7 @@ class LoraEncoder {
         void writeUnixtime(uint32_t unixtime);
         void writeLatLng(double latitude, double longitude);
         void writeUint16(uint16_t i);
-        void writeLatLngAltHdop(double latitude, double longitude, uint16_t altitude, int16_t hdop);
+        void writeLatLngAltHdop(double latitude, double longitude, int16_t altitude, int16_t hdop);
         void writeTemperature(float temperature);
         void writeUint8(uint8_t i);
         void writeFloat(float f);
