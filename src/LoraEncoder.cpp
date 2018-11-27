@@ -29,9 +29,21 @@
 #endif
 #include "LoraEncoder.h"
 
-LoraEncoder::LoraEncoder(byte *buffer) {
-  _buffer = buffer;
+LoraEncoder::LoraEncoder(uint8_t size) {
+  _buffer = (uint8_t *)malloc(size);
   _cursor = 0;
+}
+
+LoraEncoder::~LoraEncoder(void) {
+    free(_buffer);
+}
+
+uint8_t LoraEncoder::getSize(void) {
+    return _cursor;
+}
+
+uint8_t *LoraEncoder::getBuffer(void) {
+    return _buffer;
 }
 
 void LoraEncoder::_intToBytes(byte *buf, int32_t i, uint8_t byteSize) {

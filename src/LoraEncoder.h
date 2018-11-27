@@ -36,7 +36,10 @@
 
 class LoraEncoder {
     public:
-        LoraEncoder(byte *buffer);
+        LoraEncoder(uint8_t size);
+        ~LoraEncoder();
+        uint8_t getSize(void);
+        uint8_t *getBuffer(void);
         void writeUnixtime(uint32_t unixtime);
         void writeLatLng(double latitude, double longitude);
         void writeUint16(uint16_t i);
