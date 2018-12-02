@@ -1,7 +1,11 @@
 var bytesToInt = function(bytes) {
+  var sign = bytes[bytes.length-1] & (1 << 7);
   var i = 0;
   for (var x = 0; x < bytes.length; x++) {
     i |= +(bytes[x] << (x * 8));
+  }
+  if ((sign) && (bytes.length < 4)) {
+    i |= 0xFFFF0000;
   }
   return i;
 };
